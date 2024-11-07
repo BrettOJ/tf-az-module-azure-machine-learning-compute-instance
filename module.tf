@@ -1,5 +1,5 @@
 resource "azurerm_machine_learning_compute_instance" "az_ml_ci" {
-  name                          = module.azml_ws_name.naming_convention_output[var.naming_convention_info.name].names.0
+  name                          = module.azml_compute_instance_name.naming_convention_output[var.naming_convention_info.name].names.0
   machine_learning_workspace_id = var.machine_learning_workspace_id
   virtual_machine_size          = var.virtual_machine_size
   authorization_type            = var.authorization_type
