@@ -1,27 +1,27 @@
 
 variable "address_space" {
- type = list(string)
+  type = list(string)
 }
 
 variable "location" {
-  type = string
+  type    = string
   default = "southeastasia"
 }
 
 variable "resource_group_name" {
-  type = string
+  type    = string
   default = "vnet-rg"
 }
 
 variable "bgp_community" {
-  type = string
+  type    = string
   default = null
 }
-  
+
 variable "ddos_protection_plan" {
   type = map(any)
   default = {
-    id = ""
+    id     = ""
     enable = false
   }
 }
@@ -34,19 +34,19 @@ variable "encryption" {
 }
 
 variable "dns_servers" {
-  type = list(string)
+  type    = list(string)
   default = [""]
 }
 
 variable "flow_timeout_in_minutes" {
-  type = number
+  type    = number
   default = 4
 }
 
 variable "create_nsg" {
-  type = bool
+  type    = bool
   default = false
-  
+
 }
 
 ## Storage Account Variables
@@ -423,7 +423,7 @@ variable "private_service_connection_is_manual_connection" {
 variable "private_service_connection_private_connection_resource_alias" {
   type        = string
   description = "(Optional) Specifies the Alias of the Private Connection Resource to connect to."
-  default = null
+  default     = null
 }
 
 variable "private_service_connection_subresource_names" {
@@ -467,7 +467,7 @@ variable "private_dns_zone_group_name" {
 
 
 variable "domain_name" {
-  type = string
+  type        = string
   description = "(Optional) Specifies the Domain Name that should be used for the Private DNS Zone. Changing this forces a new resource to be created."
 }
 
@@ -511,49 +511,49 @@ variable "sku_name" {
 variable "managed_network_isolation_mode" {
   type        = string
   description = "value of the managed network isolation mode"
-  default = null
+  default     = null
 }
 variable "serverless_compute_subnet_id" {
   type        = string
   description = "value of the serverless compute subnet id"
-  default = null
+  default     = null
 }
 
 variable "serverless_compute_public_ip_enabled" {
   type        = bool
   description = "value of the serverless compute public ip enabled"
-  default = null
+  default     = null
 }
 
 variable "feature_store_computer_spark_runtime_version" {
   type        = string
   description = "value of the feature store computer spark runtime version"
-  default = null
+  default     = null
 }
 
 variable "feature_store_offline_connection_name" {
   type        = string
   description = "value of the feature store offline connection name"
-   default = null
+  default     = null
 }
 
 variable "feature_store_online_connection_name" {
   type        = string
   description = "value of the feature store online connection name"
-  default = null
+  default     = null
 }
 
 variable "ml_ws_kind" {
   type        = string
   description = "value of the ml ws kind"
-  default = "Default"
+  default     = "Default"
 }
 
 variable "container_registry_id" {
   type        = string
   description = "value of the container registry id"
-  default = null
-  
+  default     = null
+
 }
 
 
@@ -667,7 +667,7 @@ variable "ssh_key" {
 
 variable "assign_to_user_object_id" {
   type = string
-  
+
 }
 
 variable "assign_to_user_tenant_id" {

@@ -7,7 +7,7 @@ locals {
     name         = "name"
     agency_code  = "ac"
   }
-   tags = {
+  tags = {
     environment = "prd"
   }
 }
@@ -21,7 +21,7 @@ module "resource_groups" {
       name                   = var.resource_group_name
       location               = var.location
       naming_convention_info = local.naming_convention_info
-      tags = local.tags
+      tags                   = local.tags
     }
   }
 }
@@ -97,43 +97,43 @@ module "azure_storage_account" {
   }
 
   network_rules = {
-    default_action = "Deny"
-    bypass         = ["AzureServices"]
-    ip_rules       = null
+    default_action             = "Deny"
+    bypass                     = ["AzureServices"]
+    ip_rules                   = null
     virtual_network_subnet_ids = [module.azure_subnet.snet_output[1].id]
-    private_link_access = null
+    private_link_access        = null
 
-}
+  }
 }
 
 module "azurerm_key_vault" {
-  source              = "git::https://github.com/BrettOJ/tf-az-module-azure-key-vault?ref=main" 
-  resource_group_name = module.resource_groups.rg_output[1].name
-  location            = var.location
-  sku_name    = "standard"
-  tenant_id           = data.azurerm_client_config.current.tenant_id
+  source                          = "git::https://github.com/BrettOJ/tf-az-module-azure-key-vault?ref=main"
+  resource_group_name             = module.resource_groups.rg_output[1].name
+  location                        = var.location
+  sku_name                        = "standard"
+  tenant_id                       = data.azurerm_client_config.current.tenant_id
   enabled_for_deployment          = true
   enabled_for_disk_encryption     = true
   enabled_for_template_deployment = true
   enable_rbac_authorization       = true
   purge_protection_enabled        = true
   public_network_access_enabled   = true
-  soft_delete_retention_days      = 7 
+  soft_delete_retention_days      = 7
 
 
   network_acls = {
-      bypass         = "AzureServices"
-      default_action = "Allow"
-      ip_rules       = null
-      virtual_network_subnet_ids     = null
-    }
-  
+    bypass                     = "AzureServices"
+    default_action             = "Allow"
+    ip_rules                   = null
+    virtual_network_subnet_ids = null
+  }
+
   naming_convention_info = local.naming_convention_info
   tags                   = local.tags
 }
 
 module "azurerm_machine_learning_workspace" {
-  source                         = "git::https://github.com/BrettOJ/tf-az-module-azure-ml-workspace?ref=main" 
+  source                         = "git::https://github.com/BrettOJ/tf-az-module-azure-ml-workspace?ref=main"
   location                       = var.location
   resource_group_name            = module.resource_groups.rg_output[1].name
   application_insights_id        = module.azurerm_application_insights.app_insights_output.id
@@ -141,7 +141,7 @@ module "azurerm_machine_learning_workspace" {
   storage_account_id             = module.azure_storage_account.sst_output.id
   kind                           = var.ml_ws_kind
   container_registry_id          = null #var.container_registry_id
-  public_network_access_enabled  = var.ml_ws_public_network_access_enabled 
+  public_network_access_enabled  = var.ml_ws_public_network_access_enabled
   image_build_compute_name       = var.image_build_compute_name
   description                    = var.description
   friendly_name                  = var.friendly_name
@@ -150,10 +150,10 @@ module "azurerm_machine_learning_workspace" {
   v1_legacy_mode_enabled         = var.v1_legacy_mode_enabled
   sku_name                       = var.sku_name
   tags                           = local.tags
-  naming_convention_info = local.naming_convention_info
+  naming_convention_info         = local.naming_convention_info
 
   identity = {
-    type = "SystemAssigned"
+    type         = "SystemAssigned"
     identity_ids = null
   }
 
@@ -172,29 +172,29 @@ module "azurerm_machine_learning_workspace" {
 
 
 module "azurerm_machine_learning_compute_instance" {
-    source = "git::https://github.com/BrettOJ/tf-az-module-azure-machine-learning-compute-instance?ref=main" 
+  source                        = "git::https://github.com/BrettOJ/tf-az-module-azure-machine-learning-compute-instance?ref=main"
   machine_learning_workspace_id = model.azurerm_machine_learning_workspace.azml_ws_output.id
   virtual_machine_size          = "STANDARD_DS2_V2"
   authorization_type            = "personal"
-    description                   = "Example Machine Learning Compute Instance"
-    local_auth_enabled            = true
-    node_public_ip_enabled        = true
+  description                   = "Example Machine Learning Compute Instance"
+  local_auth_enabled            = true
+  node_public_ip_enabled        = true
 
   ssh = {
     public_key = var.ssh_key
   }
 
-    identity = {
-        type         = "SystemAssigned"
-        identity_ids = []
-    }
+  identity = {
+    type         = "SystemAssigned"
+    identity_ids = []
+  }
 
-    assign_to_user = {
-        object_id = var.assign_to_user_object_id
-        tenant_id = var.assign_to_user_tenant_id
-    }
+  assign_to_user = {
+    object_id = var.assign_to_user_object_id
+    tenant_id = var.assign_to_user_tenant_id
+  }
 
   subnet_resource_id = module.azure_subnet.snet_output[1].id
-  tags = local.tags
+  tags               = local.tags
 
 }

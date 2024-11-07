@@ -5,7 +5,9 @@ resource "azurerm_machine_learning_compute_instance" "az_ml_ci" {
   authorization_type            = var.authorization_type
   local_auth_enabled            = var.local_auth_enabled
   node_public_ip_enabled        = var.node_public_ip_enabled
-
+  subnet_resource_id            = var.subnet_resource_id
+  description                   = var.description
+  tags                          = var.tags
   assign_to_user {
     object_id = var.assign_to_user.object_id
     tenant_id = var.assign_to_user.tenant_id
@@ -17,9 +19,7 @@ resource "azurerm_machine_learning_compute_instance" "az_ml_ci" {
   }
 
   ssh {
-    public_key = var.ssh.public_key
+    public_key = var.ssh.ssh_key
   }
-  subnet_resource_id = var.subnet_resource_id
-  description        = var.description
-  tags               = var.tags
+
 }
