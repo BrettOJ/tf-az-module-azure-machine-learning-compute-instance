@@ -52,6 +52,7 @@ variable "assign_to_user" {
     tenant_id = string
   })
   description = "A assign_to_user block supports the following:"
+  default = null
 }
 
 variable "ssh" {
