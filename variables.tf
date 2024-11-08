@@ -67,8 +67,4 @@ variable "naming_convention_info" {
 
 }
 
-variable "tags" {
-  type        = map(string)
-  description = " (Optional) A mapping of tags which should be assigned to the Machine Learning Compute Instance. Changing this forces a new Machine Learning Compute Instance to be created."
 
-}
