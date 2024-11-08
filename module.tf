@@ -19,7 +19,7 @@ resource "azurerm_machine_learning_compute_instance" "az_ml_ci" {
   }
 
   ssh {
-    public_key = var.ssh.ssh_key
+    public_key = var.ssh.public_key
   }
 
 }
