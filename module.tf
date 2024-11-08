@@ -8,9 +8,12 @@ resource "azurerm_machine_learning_compute_instance" "az_ml_ci" {
   subnet_resource_id            = var.subnet_resource_id
   description                   = var.description
   tags                          = var.tags
-  assign_to_user {
-    object_id = var.assign_to_user.object_id
-    tenant_id = var.assign_to_user.tenant_id
+  dynamic assign_to_user {
+    for_each = var.assign_to_user != null ? [1] : []
+    content {
+      object_id = var.assign_to_user.object_id
+      tenant_id = var.assign_to_user.tenant_id
+    }
   }
 
   identity {
